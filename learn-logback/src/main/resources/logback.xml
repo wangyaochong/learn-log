@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
-    <property name="pattern" value="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %c %m %L[%thread] %msg%n"/>
+    <define name="hostname" class="com.example.learnlogback.HostNamePropertyDefiner"/>
+    <property name="pattern" value="[%-5level] ${user.name} ${hostname} %d{yyyy-MM-dd HH:mm:ss.SSS} %c %M %L[%thread] %msg%n"/>
     <property name="log_dir" value="/logs"/>
     <!--
         日志输出格式：
@@ -59,12 +60,12 @@
         <appender-ref ref="rollingFile"/>
     </appender>
 
-<!--    <root level="all">-->
-<!--        <appender-ref ref="console"/>-->
-<!--        <appender-ref ref="file"/>-->
-<!--        <appender-ref ref="htmlFile"/>-->
-<!--        <appender-ref ref="rollingFile"/>-->
-<!--    </root>-->
+    <!--    <root level="all">-->
+    <!--        <appender-ref ref="console"/>-->
+    <!--        <appender-ref ref="file"/>-->
+    <!--        <appender-ref ref="htmlFile"/>-->
+    <!--        <appender-ref ref="rollingFile"/>-->
+    <!--    </root>-->
 
     <logger name="com.example.learnlogback.TestLogback" level="info" additivity="false">
         <appender-ref ref="console"/>
