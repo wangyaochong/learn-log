@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" monitorInterval="5">
+    <properties>
+        <property name="LOG_HOME">D:/logs</property>
+    </properties>
+<!--    4.3 Log4j2异步日志-->
+<!--    异步日志-->
+<!--    log4j2最大的特点就是异步日志，其性能的提升主要也是从异步日志中受益，我们来看看如何使用-->
+<!--    log4j2的异步日志。-->
+<!--    同步日志-->
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] [%-5level] %c{36}:%L - -- %m%n"/>
+        </Console>
+        <File name="file" fileName="${LOG_HOME}/myfile.log">
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5level] %l %c{36} - %m%n"/>
+        </File>
+        <RandomAccessFile name="accessFile" fileName="${LOG_HOME}/myAcclog.log">
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5level] %l %c{36} - %m%n"/>
+        </RandomAccessFile>
+        <RollingFile name="rollingFile" fileName="${LOG_HOME}/myrollog.log"
+                     filePattern="D:/logs/$${date:yyyy-MM-dd}/myrollog-%d{yyyy- MM-dd-HH-mm}-%i.log">
+            <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%-5level] %l %c{36} - %msg%n"/>
+            <Policies>
+                <!-- 系统启动生成新的日志文件 -->
+                <OnStartupTriggeringPolicy/>
+                <!-- 按照文件大小是10MB进行拆分 -->
+                <SizeBasedTriggeringPolicy size="10 MB"/>
+                <!--按照时间节点进行文件拆分-->
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+            <!-- 限定文件个数是30个 -->
+            <DefaultRolloverStrategy max="30"/>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
